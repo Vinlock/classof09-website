@@ -1,20 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { rem } from 'polished'
-import Image from '../components/Image'
 import CoreLayout from '../layouts/CoreLayout'
 import Step from '../components/Step'
-
-const ImageContainer = styled.div`
-  text-align: center;
-  width: 100%;
-  margin-bottom: ${rem('50px')};
-`;
-
-const StyledImage = styled(Image)`
-  margin: 0 auto;
-  max-width: ${rem('500px')};
-`;
 
 const Text = styled.div`
   text-align: center;
@@ -29,9 +17,6 @@ const Text = styled.div`
 const IndexPage = () => {
   return (
     <CoreLayout>
-      <ImageContainer>
-        <StyledImage image="ecr_banner" />
-      </ImageContainer>
       <Text>
         <p>
           Welcome to the home page for the Class of 2009 10 Year High School Reunion.
@@ -42,18 +27,18 @@ const IndexPage = () => {
       </Text>
       <Step
         stepNumber={1}
-        title="Date Survey"
+        title="Reunion Survey"
         actionText={() => {
           return (
             <a className="typeform-share button btn btn-dark"
                href="https://vinlock1.typeform.com/to/CWy6cX"
                data-mode="popup"
                target="_blank">
-              Take the Survey!
+              Click to Take the Survey!
             </a>
           );
         }}
-        description="Pick the event dates that are most convenient for you!"
+        description="Take the survey so we can collect data to make the best reunion possible!"
       />
     </CoreLayout>
   );

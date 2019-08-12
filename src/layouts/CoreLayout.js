@@ -1,8 +1,9 @@
-import React from 'react'
-// import PropTypes from 'prop-types'
-import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
-import '../styles/index.scss'
-import Footer from '../components/Footer'
+import { rem } from 'polished';
+import React from 'react';
+import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
+import '../styles/index.scss';
+import Footer from '../components/Footer';
+import Image from '../components/Image';
 
 const theme = {
   smWidth: '576px',
@@ -26,10 +27,26 @@ const Container = styled.div`
   }
 `;
 
+const ImageContainer = styled.div`
+  text-align: center;
+  width: 100%;
+  margin-bottom: ${rem('50px')};
+`;
+
+const StyledImage = styled(Image)`
+  margin: 0 auto;
+  max-width: ${rem('500px')};
+`;
+
 const CoreLayout = ({ children }) => {
   return (
     <>
       <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <ImageContainer>
+          <StyledImage image="ecr_banner" />
+        </ImageContainer>
+      </ThemeProvider>
       <ThemeProvider theme={theme}>
         <main>
           <Container className="container">
