@@ -1,5 +1,6 @@
-import { rem } from 'polished';
 import React from 'react';
+import { rem } from 'polished';
+import { Link } from 'gatsby';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import '../styles/index.scss';
 import Footer from '../components/Footer';
@@ -44,7 +45,9 @@ const CoreLayout = ({ children }) => {
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <ImageContainer>
-          <StyledImage image="ecr_banner" />
+          <Link to="/">
+            <StyledImage image="ecr_banner" />
+          </Link>
         </ImageContainer>
       </ThemeProvider>
       <ThemeProvider theme={theme}>

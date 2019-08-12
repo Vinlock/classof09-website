@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { rem } from 'polished'
+import { Link } from 'gatsby';
 import Image from '../Image';
 
 const Container = styled.div`
@@ -16,10 +17,25 @@ const StyledImage = styled(Image)`
   margin: 0 auto;
 `;
 
+const StyledLink = styled(Link)`
+  color: #000;
+  margin: ${rem('20px')};
+`;
+
+const FooterLinks = styled.div`
+  margin: ${rem('20px')};
+`;
+
 const Footer = () => (
   <Container className="container">
-    Powered by
-    <StyledImage image="dak_logo" />
+    <FooterLinks>
+      <StyledLink to="/">Home</StyledLink>
+      <StyledLink to="/privacy">Privacy Policy</StyledLink>
+    </FooterLinks>
+    <div>
+      Powered by
+      <StyledImage image="dak_logo" />
+    </div>
   </Container>
 );
 
