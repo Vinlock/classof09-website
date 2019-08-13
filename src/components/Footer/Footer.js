@@ -31,6 +31,7 @@ const Footer = () => (
     <FooterLinks>
       <StyledLink to="/">Home</StyledLink>
       <StyledLink to="/privacy">Privacy Policy</StyledLink>
+      <StyledLink to="/terms">Terms</StyledLink>
     </FooterLinks>
     <div>
       Powered by

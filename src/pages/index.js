@@ -43,6 +43,18 @@ const IndexPage = () => {
       })
   }, []);
 
+  let disabledOverlay = (
+    <a href={ `${ process.env.GATSBY_API_ENDPOINT }/auth/login` } className="btn btn-primary">
+      <i className="fab fa-facebook-square" /> Login via Facebook
+    </a>
+  );
+  if (user && user.surveyDone) {
+    disabledOverlay = (
+      <p>You have completed the survey!</p>
+    )
+  }
+
+
   if (userTried) {
     return (
       <CoreLayout>
@@ -98,12 +110,8 @@ const IndexPage = () => {
               Click to Take the Survey!
             </button>
           )}
-          disabled={!user}
-          disabledOverlay={(
-            <a href={ `${ process.env.GATSBY_API_ENDPOINT }/auth/login` } className="btn btn-primary">
-              <i className="fab fa-facebook-square" /> Login via Facebook
-            </a>
-          )}
+          disabled={!user || (user && user.surveryDone)}
+          disabledOverlay={disabledOverlay}
           description="Take the survey so we can collect data to make the best reunion possible!"
         />
       </CoreLayout>
