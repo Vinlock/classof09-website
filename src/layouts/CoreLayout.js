@@ -39,6 +39,7 @@ const StyledImage = styled(Image)`
   max-width: ${rem('500px')};
 `;
 
+
 const CoreLayout = ({ children }) => {
   return (
     <>

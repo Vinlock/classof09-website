@@ -69,10 +69,10 @@ const DisabledOverlayContainer = styled.div`
   `};
 `;
 
-const DisabledOverlay = () => {
+const DisabledOverlay = ({ override = null}) => {
   return (
     <DisabledOverlayContainer>
-      Coming Soon!
+      {override || "Coming Soon!"}
     </DisabledOverlayContainer>
   );
 };
@@ -84,11 +84,11 @@ const Button = styled.button`
   }
 `;
 
-const Step = ({ stepNumber, title, disabled, description, actionText }) => {
+const Step = ({ stepNumber, title, disabled, description, actionText, disabledOverlay }) => {
   return(
     <Container className="row">
       <ColumnContainer className="col-12 position-relative">
-        {disabled ? <DisabledOverlay /> : null}
+        {disabled ? <DisabledOverlay override={disabledOverlay} /> : null}
         <StepContainer disabled={disabled}>
           <div className="row">
             <div className="col-6">
@@ -117,7 +117,10 @@ Step.defaultProps = {
 Step.propTypes = {
   stepNumber: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  actionText: PropTypes.string.isRequired,
+  actionText: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]),
   description: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
 };
