@@ -62,15 +62,12 @@ const IndexPage = () => {
                 </h2>
               </div>
               <div className="col-2">
-                <button
+                <a
                   className="btn btn-link"
-                  onClick={() => {
-                    Cookies.remove('token');
-                    window.location.reload();
-                  }}
+                  href={`${ process.env.GATSBY_API_ENDPOINT }/auth/logout`}
                 >
                   Logout
-                </button>
+                </a>
               </div>
             </div>
           )}
