@@ -26,6 +26,10 @@ const Text = styled.div`
   }
 `;
 
+const SmallText = styled.div`
+  font-size: ${rem('15px')};
+`;
+
 const IndexPage = () => {
   const typeform = React.useRef(null);
   const [user, setUser] = React.useState(null);
@@ -48,10 +52,16 @@ const IndexPage = () => {
       <i className="fab fa-facebook-square" /> Login via Facebook
     </a>
   );
+  console.log(user)
   if (user && user.surveyDone) {
     disabledOverlay = (
-      <p>You have completed the survey!</p>
-    )
+      <>
+        <div>
+          <div>You have completed the survey!</div>
+          <SmallText>Once we finish collecting all of the data, we will begin ticket sales.</SmallText>
+        </div>
+      </>
+    );
   }
 
 
@@ -110,7 +120,7 @@ const IndexPage = () => {
               Click to Take the Survey!
             </button>
           )}
-          disabled={!user || (user && user.surveryDone)}
+          disabled={!user || (user && user.surveyDone)}
           disabledOverlay={disabledOverlay}
           description="Take the survey so we can collect data to make the best reunion possible!"
         />

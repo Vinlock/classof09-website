@@ -37,7 +37,7 @@ const StepContainer = styled.div`
     `;
   }};
   ${props => props.disabled && `
-    filter: blur(4px);
+    filter: blur(10px);
   `};
 `;
 
