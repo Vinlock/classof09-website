@@ -30,6 +30,10 @@ const SmallText = styled.div`
   font-size: ${rem('15px')};
 `;
 
+const Row = styled.div`
+  margin: 0 !important;
+`;
+
 const IndexPage = () => {
   const typeform = React.useRef(null);
   const [user, setUser] = React.useState(null);
@@ -77,7 +81,7 @@ const IndexPage = () => {
         /> }
         <Text>
           { user && user.name && (
-            <div className="row">
+            <Row className="row">
               <div className="col-10">
                 <h2>
                   Hello, { user.name }!
@@ -91,7 +95,7 @@ const IndexPage = () => {
                   Logout
                 </a>
               </div>
-            </div>
+            </Row>
           )}
           <p>
             Welcome to the home page for the Class of 2009 10 Year High School Reunion.
