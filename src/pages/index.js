@@ -52,7 +52,7 @@ const IndexPage = () => {
       <i className="fab fa-facebook-square" /> Login via Facebook
     </a>
   );
-  console.log(user)
+
   if (user && user.surveyDone) {
     disabledOverlay = (
       <>
@@ -86,7 +86,7 @@ const IndexPage = () => {
               <div className="col-2">
                 <a
                   className="btn btn-link"
-                  href={`${ process.env.GATSBY_API_ENDPOINT }/auth/logout`}
+                  href={`${ process.env.GATSBY_API_ENDPOINT }/auth/logout?redirect=${encodeURIComponent(window.location.href)}`}
                 >
                   Logout
                 </a>
