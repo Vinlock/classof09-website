@@ -6,7 +6,6 @@ import axios from 'axios';
 import CoreLayout from '../layouts/CoreLayout';
 import Step from '../components/Step';
 import Cookies from 'js-cookie';
-import { URLSearchParams } from 'url';
 
 const TYPEFORM_SURVEY = 'https://vinlock1.typeform.com/to/CWy6cX';
 
