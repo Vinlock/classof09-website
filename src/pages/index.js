@@ -6,6 +6,7 @@ import axios from 'axios';
 import CoreLayout from '../layouts/CoreLayout';
 import Step from '../components/Step';
 import Cookies from 'js-cookie';
+import { URLSearchParams } from 'url';
 
 const TYPEFORM_SURVEY = 'https://vinlock1.typeform.com/to/CWy6cX';
 
@@ -38,6 +39,17 @@ const IndexPage = () => {
   const typeform = React.useRef(null);
   const [user, setUser] = React.useState(null);
   const [userTried, setUserTried] = React.useState(false);
+  const [surveyComplete, setSurveyStatus] = React.useState(false);
+
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('c')) {
+      Cookies.set('typeform_done', true);
+    }
+    if (Cookies.get('typeform_done')) {
+      setSurveyStatus(true);
+    }
+  }, []);
 
   React.useEffect(() => {
     api.get('/auth/user')
@@ -45,6 +57,7 @@ const IndexPage = () => {
       .then((data) => {
         setUser(data);
         setUserTried(true);
+        setSurveyStatus(data.surveyDone);
       })
       .catch(() => {
         setUserTried(true);
@@ -57,7 +70,7 @@ const IndexPage = () => {
     </a>
   );
 
-  if (user && user.surveyDone) {
+  if (surveyComplete || (user && user.surveyDone)) {
     disabledOverlay = (
       <>
         <div>
@@ -78,6 +91,7 @@ const IndexPage = () => {
           hideFooter={ true }
           hideHeader={ true }
           popup={ true }
+
         /> }
         <Text>
           { user && user.name && (
@@ -119,7 +133,7 @@ const IndexPage = () => {
             <button
               className="btn btn-dark"
               onClick={ () => typeform.current.typeform.open() }
-              disabled={!user}
+              disabled={!user || surveyComplete}
             >
               Click to Take the Survey!
             </button>
