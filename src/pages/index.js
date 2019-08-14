@@ -42,8 +42,7 @@ const IndexPage = () => {
   const [surveyComplete, setSurveyStatus] = React.useState(false);
 
   React.useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('c')) {
+    if (window.location.search.includes('c=')) {
       Cookies.set('typeform_done', true);
     }
     if (Cookies.get('typeform_done')) {
