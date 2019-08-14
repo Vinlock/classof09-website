@@ -44,6 +44,7 @@ const IndexPage = () => {
   React.useEffect(() => {
     if (window.location.search.includes('c=')) {
       Cookies.set('typeform_done', true);
+      window.location.search = '';
     }
     if (Cookies.get('typeform_done')) {
       setSurveyStatus(true);
