@@ -69,7 +69,7 @@ const IndexPage = () => {
     </a>
   );
 
-  if (surveyComplete || (user && user.surveyDone)) {
+  if (!user && (surveyComplete || (user && user.surveyDone))) {
     disabledOverlay = (
       <>
         <div>
