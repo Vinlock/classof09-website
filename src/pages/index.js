@@ -5,6 +5,7 @@ import { ReactTypeformEmbed } from 'react-typeform-embed';
 import axios from 'axios';
 import CoreLayout from '../layouts/CoreLayout';
 import Step from '../components/Step';
+import SEO from '../components/SEO';
 import Cookies from 'js-cookie';
 
 const TYPEFORM_SURVEY = 'https://vinlock1.typeform.com/to/CWy6cX';
@@ -69,7 +70,7 @@ const IndexPage = () => {
     </a>
   );
 
-  if (!user && (surveyComplete || (user && user.surveyDone))) {
+  if (user && (surveyComplete || (user && user.surveyDone))) {
     disabledOverlay = (
       <>
         <div>
@@ -90,8 +91,8 @@ const IndexPage = () => {
           hideFooter={ true }
           hideHeader={ true }
           popup={ true }
-
         /> }
+        <SEO title="Home" />
         <Text>
           { user && user.name && (
             <Row className="row">
