@@ -87,7 +87,7 @@ const IndexPage = () => {
       <CoreLayout>
         { user && user.name && <ReactTypeformEmbed
           ref={ typeform }
-          url={ TYPEFORM_SURVEY + `?name=${ encodeURIComponent(user.name) }&id=${encodeURIComponent(user.id)}` }
+          url={ TYPEFORM_SURVEY + `?name=${ encodeURIComponent(user.name) }&id=${encodeURIComponent(user.fbId)}` }
           hideFooter={ true }
           hideHeader={ true }
           popup={ true }
@@ -125,6 +125,8 @@ const IndexPage = () => {
               <small>If you do not have a facebook account, email us at <a href="mailto:contact@classof09.org">contact@classof09.org</a> with your full name.</small>
             </>
           )}
+          <br />
+          <h3 className="text-right">{user.totalEntries || 0} alumni answered.</h3>
         </Text>
         <Step
           stepNumber={ 1 }
