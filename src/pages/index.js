@@ -52,16 +52,21 @@ const IndexPage = () => {
   }, []);
 
   React.useEffect(() => {
-    api.get('/auth/user')
-      .then(res => res.data)
-      .then((data) => {
-        setUser(data);
-        setUserTried(true);
-        setSurveyStatus(data.surveyDone);
-      })
-      .catch(() => {
-        setUserTried(true);
-      })
+    if (Cookies.get('token')) {
+      api.get('/auth/user')
+        .then(res => res.data)
+        .then((data) => {
+          setUser(data);
+          setUserTried(true);
+          setSurveyStatus(data.surveyDone);
+        })
+        .catch((err) => {
+          setUserTried(true);
+          if (err.response.status === 401) {
+            Cookies.remove('token');
+          }
+        })
+    }
   }, []);
 
   let disabledOverlay = (
