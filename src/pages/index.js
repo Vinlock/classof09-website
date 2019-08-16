@@ -66,6 +66,8 @@ const IndexPage = () => {
             Cookies.remove('token');
           }
         })
+    } else {
+      setUserTried(true);
     }
   }, []);
 
