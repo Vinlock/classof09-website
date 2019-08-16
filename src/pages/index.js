@@ -134,7 +134,7 @@ const IndexPage = () => {
           )}
           <br />
           <br />
-          <h3 className="text-right">{(user && user.totalEntries) || 0} alumni attendance onfirmed.</h3>
+          <h3 className="text-right">{(user && `${user.totalEntries || 0} alumni attendance confirmed.`)}</h3>
         </Text>
         <Step
           stepNumber={ 1 }
