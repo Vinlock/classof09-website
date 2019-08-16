@@ -35,7 +35,9 @@ const Footer = () => (
     </FooterLinks>
     <div>
       Powered by
-      <StyledImage image="dak_logo" />
+      <a href="https://github.com/Vinlock" target="_blank">
+        <StyledImage image="dak_logo" />
+      </a>
     </div>
   </Container>
 );
