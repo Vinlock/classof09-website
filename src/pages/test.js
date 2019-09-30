@@ -103,10 +103,7 @@ const IndexPage = () => {
           <SEO title="Home"/>
           <Container maxWidth="md">
             <Grid container spacing={3}>
-              <Grid item xs={10} className="text-left">
-                <Typography variant="h5">Hello, {user.name}!</Typography>
-              </Grid>
-              <Grid item xs={2} className="text-right">
+              <Grid item xs={12} className="center">
                 <Button
                   onClick={() => {
                     const apiEndpoint = process.env.GATSBY_API_ENDPOINT;
@@ -117,6 +114,9 @@ const IndexPage = () => {
                 >
                   Logout
                 </Button>
+              </Grid>
+              <Grid item xs={12} className="text-center">
+                <Typography variant="h5">Hello, {user.name}!</Typography>
               </Grid>
             </Grid>
             <div className="text-center">
