@@ -51,7 +51,7 @@ const Step2 = (props) => {
     console.log('MOUNTING');
     window.EBWidgets.createWidget({
       widgetType: "checkout",
-      eventId: `${process.env.GATSBY_EVENTBRITE_EVENT_ID}?discount=IBKUFCCMIEGLBLMKWKJW`,
+      eventId: `${process.env.GATSBY_EVENTBRITE_EVENT_ID}`,
       modal: true,
       modalTriggerElementId: 'eventbrite-trigger',
       onOrderComplete: callback,
