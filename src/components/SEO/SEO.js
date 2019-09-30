@@ -4,13 +4,23 @@ import Helmet from 'react-helmet'
 import { useStaticQuery, graphql } from 'gatsby'
 
 function SEO({ description, lang, meta, title }) {
-  const { site } = useStaticQuery(
+  const { site, ecr_logo } = useStaticQuery(
     graphql`
       query {
         site {
           siteMetadata {
             title
             description
+          }
+        }
+        ecr_logo: file(relativePath: { eq: "ecr_logo.png" }) {
+          childImageSharp {
+            icon: fluid(maxWidth: 200) {
+              ...GatsbyImageSharpFluid
+            }
+            image: fluid(maxWidth: 1024) {
+              ...GatsbyImageSharpFluid
+            }
           }
         }
       }
@@ -34,6 +44,10 @@ function SEO({ description, lang, meta, title }) {
         {
           property: `og:title`,
           content: title,
+        },
+        {
+          property: `og:image`,
+          content: ecr_logo.childImageSharp.image
         },
         {
           property: `og:description`,

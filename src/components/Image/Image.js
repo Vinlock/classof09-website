@@ -2,7 +2,7 @@ import React from 'react'
 import { useStaticQuery, graphql } from 'gatsby'
 import Img from 'gatsby-image'
 
-const Image = ({ image, className }) => {
+const Image = ({ image, className, type = 'fluid' }) => {
   const data = useStaticQuery(graphql`
     query {
       ecr: file(relativePath: { eq: "ecr.png" }) {
@@ -29,7 +29,7 @@ const Image = ({ image, className }) => {
     }
   `);
 
-  return <Img className={className} fluid={data[image].childImageSharp.fluid} />
+  return <Img className={className} fluid={data[image].childImageSharp[type]} />
 };
 
 export default Image

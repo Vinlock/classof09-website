@@ -3,15 +3,7 @@ import * as PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { rem } from 'polished'
 import { clearFix, noSelect } from '../../styles/mixins'
-
-const Container = styled.div`
-  width: ${ rem('500px') };
-  margin: ${rem('10px')} auto;
-  font-family: 'Roboto', sans-serif;
-  @media (max-width: ${ props => props.theme.mdWidth }) {
-    width: 100%;
-  }
-`;
+import Container from '../Container';
 
 const StepContainer = styled.div`
   position: relative;
@@ -72,7 +64,7 @@ const DisabledOverlayContainer = styled.div`
 const DisabledOverlay = ({ override = null}) => {
   return (
     <DisabledOverlayContainer>
-      {override || "Coming Soon!"}
+      {override() || "Coming Soon!"}
     </DisabledOverlayContainer>
   );
 };

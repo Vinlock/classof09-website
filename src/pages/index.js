@@ -1,39 +1,26 @@
 import React from 'react';
-import styled from 'styled-components';
-import { rem } from 'polished';
 import { ReactTypeformEmbed } from 'react-typeform-embed';
 import axios from 'axios';
 import CoreLayout from '../layouts/CoreLayout';
 import Step from '../components/Step';
 import SEO from '../components/SEO';
+import SmallText from '../components/SmallText';
+import Text from '../components/Text';
+import Row from '../components/Row';
+import Container from '../components/Container';
 import Cookies from 'js-cookie';
 
-const TYPEFORM_SURVEY = 'https://vinlock1.typeform.com/to/CWy6cX';
+const { GATSBY_TYPEFORM_SURVEY_ID } = process.env;
 
 const api = axios.create({
   baseURL: process.env.GATSBY_API_ENDPOINT,
   headers: {
     Authorization: `Bearer ${Cookies.get('token')}`,
   },
+  withCredentials: true,
 });
 
-const Text = styled.div`
-  text-align: left;
-  max-width: ${rem('500px')};
-  margin: ${rem('20px')} auto;
-  padding: ${rem('15px')};
-  p {
-    margin: ${rem('10px')} auto;
-  }
-`;
-
-const SmallText = styled.div`
-  font-size: ${rem('15px')};
-`;
-
-const Row = styled.div`
-  margin: 0 !important;
-`;
+console.log('token', Cookies.get('token'));
 
 const IndexPage = () => {
   const typeform = React.useRef(null);
@@ -53,7 +40,9 @@ const IndexPage = () => {
 
   React.useEffect(() => {
     if (Cookies.get('token')) {
-      api.get('/auth/user')
+      api.get('/rest/auth/user', {
+        params: { surveyId: GATSBY_TYPEFORM_SURVEY_ID },
+      })
         .then(res => res.data)
         .then((data) => {
           setUser(data);
@@ -61,6 +50,7 @@ const IndexPage = () => {
           setSurveyStatus(data.surveyDone);
         })
         .catch((err) => {
+          console.error(err);
           setUserTried(true);
           if (err.response.status === 401) {
             Cookies.remove('token');
@@ -71,30 +61,13 @@ const IndexPage = () => {
     }
   }, []);
 
-  let disabledOverlay = (
-    <a href={ `${ process.env.GATSBY_API_ENDPOINT }/auth/login` } className="btn btn-primary">
-      <i className="fab fa-facebook-square" /> Login via Facebook
-    </a>
-  );
-
-  if (user && (surveyComplete || (user && user.surveyDone))) {
-    disabledOverlay = (
-      <>
-        <div>
-          <div>You have completed the survey!</div>
-          <SmallText>Once we finish collecting all of the data, we will begin ticket sales.</SmallText>
-        </div>
-      </>
-    );
-  }
-
 
   if (userTried) {
     return (
       <CoreLayout>
         { user && user.name && <ReactTypeformEmbed
           ref={ typeform }
-          url={ TYPEFORM_SURVEY + `?name=${ encodeURIComponent(user.name) }&id=${encodeURIComponent(user.fbId)}` }
+          url={ `https://vinlock1.typeform.com/to/${GATSBY_TYPEFORM_SURVEY_ID}?name=${ encodeURIComponent(user.name) }&id=${encodeURIComponent(user.facebookId)}` }
           hideFooter={ true }
           hideHeader={ true }
           popup={ true }
@@ -111,7 +84,7 @@ const IndexPage = () => {
               <div className="col-2">
                 <a
                   className="btn btn-link"
-                  href={`${ process.env.GATSBY_API_ENDPOINT }/auth/logout?redirect=${encodeURIComponent(window.location.href)}`}
+                  href={`${ process.env.GATSBY_API_ENDPOINT }/rest/auth/logout?redirect=${encodeURIComponent(window.location.href)}`}
                 >
                   Logout
                 </a>
@@ -149,9 +122,31 @@ const IndexPage = () => {
             </button>
           )}
           disabled={!user || (user && user.surveyDone)}
-          disabledOverlay={disabledOverlay}
+          disabledOverlay={() => {
+            const disabledOverlay = (
+              <a href={ `${ process.env.GATSBY_API_ENDPOINT }/rest/auth/oauth/facebook` } className="btn btn-primary">
+                <i className="fab fa-facebook-square"/> Login via Facebook
+              </a>
+            );
+
+            if (user && (surveyComplete || (user && user.surveyDone))) {
+              return (
+                <>
+                  <div>
+                    <div>You have completed the survey!</div>
+                    <SmallText>Once we finish collecting all of the data, we will begin ticket sales.</SmallText>
+                  </div>
+                </>
+              );
+            }
+
+            return disabledOverlay;
+          }}
           description="Take the survey so we can collect data to make the best reunion possible!"
         />
+        <Container className="row">
+          <h2>Purchase Tickets</h2>
+        </Container>
       </CoreLayout>
     );
   } else {

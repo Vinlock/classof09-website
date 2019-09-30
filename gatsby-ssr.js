@@ -1,16 +1,27 @@
 const React = require('react');
 
-export const onRenderBody = ({ setPreBodyComponents, setHeadComponents }) => {
-  const fontAwesomeScript = React.createElement('script', {
+export const onRenderBody = ({ pathname, setPreBodyComponents, setPostBodyComponents, setHeadComponents }) => {
+  console.log('pathname', pathname);
+  console.log('pathname', pathname);
+  console.log('pathname', pathname);
+  console.log('pathname', pathname);
+
+  const headComponents = [];
+  const preBodyComponents = [];
+  const postBodyComponents = [];
+
+  headComponents.push(React.createElement('script', {
+    key: 0,
     src: "https://kit.fontawesome.com/f5a5fcf29f.js",
-  });
-  const fbScript = React.createElement('script', {
+  }));
+
+  preBodyComponents.push(React.createElement('script', {
     key: 0,
     dangerouslySetInnerHTML: {
       __html: `
         window.fbAsyncInit = function() {
           FB.init({
-            appId      : '383119815722288',
+            appId      : '${process.env.GATSBY_FACEBOOK_APP_ID}',
             xfbml      : true,
             version    : 'v4.0'
           });
@@ -26,7 +37,30 @@ export const onRenderBody = ({ setPreBodyComponents, setHeadComponents }) => {
          }(document, 'script', 'facebook-jssdk'));
       `,
     },
-  });
-  setHeadComponents([fontAwesomeScript]);
-  setPreBodyComponents([fbScript]);
+  }));
+
+  postBodyComponents.push(React.createElement('script', {
+    key: 1,
+    src: 'https://www.eventbrite.com/static/widgets/eb_widgets.js',
+  }));
+
+  postBodyComponents.push(React.createElement('script', {
+    key: 2,
+    type: 'text/javascript',
+    dangerouslySetInnerHTML: {
+      __html: `
+      window.EBWidgets.createWidget({
+        widgetType: "checkout",
+        eventId: "${process.env.GATSBY_EVENTBRITE_EVENT_ID}?discount=IBKUFCCMIEGLBLMKWKJW",
+        modal: true,
+        modalTriggerElementId: "eventbrite-trigger",
+        onOrderComplete: window.appEventbriteCallback
+      });
+    `,
+    },
+  }));
+
+  setHeadComponents(headComponents);
+  setPreBodyComponents(preBodyComponents);
+  setPostBodyComponents(postBodyComponents);
 };
