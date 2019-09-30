@@ -48,10 +48,11 @@ const Step2 = (props) => {
   };
 
   React.useEffect(() => {
-    console.log('MOUNTING');
+    const eventId = process.env.GATSBY_EVENTBRITE_EVENT_ID;
+    console.log('MOUNTING', eventId);
     window.EBWidgets.createWidget({
       widgetType: "checkout",
-      eventId: `${process.env.GATSBY_EVENTBRITE_EVENT_ID}`,
+      eventId: eventId,
       modal: true,
       modalTriggerElementId: 'eventbrite-trigger',
       onOrderComplete: callback,
