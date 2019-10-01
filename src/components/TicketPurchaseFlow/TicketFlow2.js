@@ -27,8 +27,11 @@ class TicketFlow2 extends React.Component {
         return this.runWidget(code);
       })
       .then(() => {
+        console.log('enabling button');
         this.setState({
           disabled: false,
+        }, () => {
+          console.log('enabled button');
         });
       });
   }
@@ -46,8 +49,11 @@ class TicketFlow2 extends React.Component {
       modalTriggerElementId: 'eventbrite-trigger',
       onOrderComplete: () => this.onOrderComplete(),
     });
-    return new Promise(resolve =>
-      setTimeout(() => resolve(true), 1000));
+    console.log('widget created');
+    return new Promise(resolve => {
+      setTimeout(() => resolve(true), 1000);
+      console.log('timeout after');
+    });
   };
 
   _setLoading = (state) => {
