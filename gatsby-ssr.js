@@ -44,22 +44,6 @@ export const onRenderBody = ({ pathname, setPreBodyComponents, setPostBodyCompon
     src: 'https://www.eventbrite.com/static/widgets/eb_widgets.js',
   }));
 
-  postBodyComponents.push(React.createElement('script', {
-    key: 2,
-    type: 'text/javascript',
-    dangerouslySetInnerHTML: {
-      __html: `
-      window.EBWidgets.createWidget({
-        widgetType: "checkout",
-        eventId: "${process.env.GATSBY_EVENTBRITE_EVENT_ID}?discount=IBKUFCCMIEGLBLMKWKJW",
-        modal: true,
-        modalTriggerElementId: "eventbrite-trigger",
-        onOrderComplete: window.appEventbriteCallback
-      });
-    `,
-    },
-  }));
-
   setHeadComponents(headComponents);
   setPreBodyComponents(preBodyComponents);
   setPostBodyComponents(postBodyComponents);

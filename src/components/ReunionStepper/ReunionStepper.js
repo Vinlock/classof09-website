@@ -12,7 +12,7 @@ import CommentIcon from '@material-ui/icons/Comment';
 import clsx from 'clsx';
 import styled from 'styled-components';
 import { rem } from 'polished';
-import TicketPurchaseFlow from '../TicketPurchaseFlow/TicketPurchaseFlow';
+import TicketFlow2 from '../TicketPurchaseFlow/TicketFlow2';
 
 const StyledTypography = styled(Typography)`
   margin-left: ${rem('20px')} !important;
@@ -113,7 +113,7 @@ export default function ReunionStepper(props) {
     {
       title: 'Purchase Tickets',
       content: (
-        <TicketPurchaseFlow {...props} />
+        <TicketFlow2 flowStep={activeStep} />
       ),
     },
     {
