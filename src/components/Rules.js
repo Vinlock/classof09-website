@@ -22,7 +22,7 @@ const Rules = () => {
           <ul>
             <li><b>NO EARLY ARRIVALS</b></li>
             <li><b>Dress Code:</b> Business Casual / Cocktail Attire</li>
-            <li>Plan for low 70s mid 60s weather.</li>
+            <li>Outdoor Venue. Plan for low 70s mid 60s weather.</li>
             <li><b>Ladies:</b> Pebbles/Sand, plan ahead on shoes.</li>
             <li><b>Serving:</b> Plenty of Food and Hors d'oeuvres.</li>
           </ul>
