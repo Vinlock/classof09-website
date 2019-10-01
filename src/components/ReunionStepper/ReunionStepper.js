@@ -123,12 +123,17 @@ export default function ReunionStepper(props) {
     {
       title: 'Done!',
       content: (
-        <div className="text-center">
-          <StyledTypography variant="h4">
-            You have already purchased your ticket!<br />See you there!
-          </StyledTypography>
+        <>
+          <div className="text-center">
+            <StyledTypography variant="h4">
+              You have already purchased your ticket!<br />See you there!
+            </StyledTypography>
+            <StyledTypography>
+              Read below for important event information. Feel free to check back to this page anytime.
+            </StyledTypography>
+          </div>
           <Rules />
-        </div>
+        </>
       ),
     },
   ];

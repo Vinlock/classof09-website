@@ -18,7 +18,7 @@ const Rules = () => {
 
   return (
     <>
-      <StyledPaper>
+      <StyledPaper className="text-center">
         <Typography variant="h5">
           Venue: <a href="https://www.malibuwines.com/malibu-wines-beer-garden/" target="_blank"><Img src="https://static1.squarespace.com/static/5adea8f331d4dfcf0915636a/t/5adea94103ce64714c8847dc/1569361675522/?format=1500w" /></a><br />
         </Typography>
