@@ -20,10 +20,10 @@ const StyledCircularProgress = styled(CircularProgress)`
   margin-left: -12px;
 `;
 
-const LoadingButton = ({ loading, action, disabled, children }) => {
+const LoadingButton = ({ loading, action, disabled, children, id }) => {
   return (
     <Container>
-      <Button variant="contained" color="primary" disabled={disabled} onClick={action}>
+      <Button id={id} variant="contained" color="primary" disabled={disabled} onClick={action}>
         {children}
       </Button>
       {loading && <StyledCircularProgress size={24} />}

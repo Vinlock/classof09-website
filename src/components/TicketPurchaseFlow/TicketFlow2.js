@@ -80,9 +80,7 @@ class TicketFlow2 extends React.Component {
           loading={loading}
           variant="contained"
           disabled={loading || disabled}
-          action={() => {
-            this.trigger.current.click();
-          }}
+          id="eventbrite-trigger"
         >
           <ConfirmationNumberIcon />&nbsp;&nbsp;Purchase Tickets
         </LoadingButton>
