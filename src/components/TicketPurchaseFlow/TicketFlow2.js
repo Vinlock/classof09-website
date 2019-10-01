@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
-import { getAccessCode } from '../../lib/api';
+import { getAccessCode, purchase } from '../../lib/api';
 import LoadingButton from '../LoadingButton/LoadingButton';
 
 class TicketFlow2 extends React.Component {
@@ -24,11 +24,15 @@ class TicketFlow2 extends React.Component {
   componentDidMount() {
     getAccessCode()
       .then((code) => {
+        console.log('got code', code);
         return this.runWidget(code);
       })
       .then(() => {
+        console.log('enabling button');
         this.setState({
           disabled: false,
+        }, () => {
+          console.log('enabled button');
         });
       });
   }
@@ -44,10 +48,21 @@ class TicketFlow2 extends React.Component {
       modal: true,
       promoCode: code,
       modalTriggerElementId: 'eventbrite-trigger',
-      onOrderComplete: () => this.onOrderComplete(),
+      onOrderComplete: ({ orderId }) => {
+        purchase(orderId)
+          .then((success) => {
+            console.log({
+              orderId: success,
+            });
+          });
+      },
+      onWidgetModalClose: () => location.reload(),
     });
-    return new Promise(resolve =>
-      setTimeout(() => resolve(true), 1000));
+    console.log('widget created');
+    return new Promise(resolve => {
+      setTimeout(() => resolve(true), 1000);
+      console.log('timeout after');
+    });
   };
 
   _setLoading = (state) => {
@@ -73,9 +88,7 @@ class TicketFlow2 extends React.Component {
           loading={loading}
           variant="contained"
           disabled={loading || disabled}
-          action={() => {
-            this.trigger.current.click();
-          }}
+          id="eventbrite-trigger"
         >
           <ConfirmationNumberIcon />&nbsp;&nbsp;Purchase Tickets
         </LoadingButton>

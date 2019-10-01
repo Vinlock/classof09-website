@@ -17,6 +17,13 @@ export const getUser = async () => {
 };
 
 export const getAccessCode = async () => {
-  const response = await api().get(`/rest/eventbrite/purchase`);
+  const response = await api().get('/rest/eventbrite/purchase');
   return response.data.code;
+};
+
+export const purchase = async (orderId) => {
+  const response = await api().put('/rest/eventbrite/order', {
+    orderId
+  });
+  return response.data.success;
 };
