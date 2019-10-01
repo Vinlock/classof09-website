@@ -24,6 +24,7 @@ class TicketFlow2 extends React.Component {
   componentDidMount() {
     getAccessCode()
       .then((code) => {
+        console.log('got code', code);
         return this.runWidget(code);
       })
       .then(() => {
