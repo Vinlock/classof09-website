@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
-import { getAccessCode } from '../../lib/api';
+import { getAccessCode, purchase } from '../../lib/api';
 import LoadingButton from '../LoadingButton/LoadingButton';
 
 class TicketFlow2 extends React.Component {
@@ -48,7 +48,15 @@ class TicketFlow2 extends React.Component {
       modal: true,
       promoCode: code,
       modalTriggerElementId: 'eventbrite-trigger',
-      onOrderComplete: () => this.onOrderComplete(),
+      onOrderComplete: ({ orderId }) => {
+        purchase(orderId)
+          .then((success) => {
+            console.log({
+              orderId: success,
+            });
+          });
+      },
+      onWidgetModalClose: () => location.reload(),
     });
     console.log('widget created');
     return new Promise(resolve => {
