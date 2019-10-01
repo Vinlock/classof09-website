@@ -1,157 +1,165 @@
+import { Typography } from '@material-ui/core';
 import React from 'react';
 import { ReactTypeformEmbed } from 'react-typeform-embed';
-import axios from 'axios';
+import Stepper from '../components/ReunionStepper';
 import CoreLayout from '../layouts/CoreLayout';
-import Step from '../components/Step';
-import SEO from '../components/SEO';
-import SmallText from '../components/SmallText';
-import Text from '../components/Text';
-import Row from '../components/Row';
-import Container from '../components/Container';
 import Cookies from 'js-cookie';
+import styled from 'styled-components';
+import { rem } from 'polished';
+import { getUser } from '../lib/api';
+import SEO from '../components/SEO';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 
 const { GATSBY_TYPEFORM_SURVEY_ID } = process.env;
 
-const api = axios.create({
-  baseURL: process.env.GATSBY_API_ENDPOINT,
-  headers: {
-    Authorization: `Bearer ${Cookies.get('token')}`,
-  },
-  withCredentials: true,
-});
+const queryParamExists = (param) => window.location.search.includes(`${param}=`);
 
-console.log('token', Cookies.get('token'));
+const userIsLoggedIn = () => Boolean(Cookies.get('token'));
+
+const StyledPaper = styled(Paper)`
+  padding: ${rem('20px')};
+`;
 
 const IndexPage = () => {
   const typeform = React.useRef(null);
   const [user, setUser] = React.useState(null);
   const [userTried, setUserTried] = React.useState(false);
-  const [surveyComplete, setSurveyStatus] = React.useState(false);
 
   React.useEffect(() => {
-    if (window.location.search.includes('c=')) {
-      Cookies.set('typeform_done', true);
-      window.location.search = '';
-    }
-    if (Cookies.get('typeform_done')) {
-      setSurveyStatus(true);
-    }
-  }, []);
-
-  React.useEffect(() => {
-    if (Cookies.get('token')) {
-      api.get('/rest/auth/user', {
-        params: { surveyId: GATSBY_TYPEFORM_SURVEY_ID },
-      })
-        .then(res => res.data)
+    // Get User Info
+    if (userIsLoggedIn()) {
+      getUser()
         .then((data) => {
+          console.log('user.data', data);
           setUser(data);
-          setUserTried(true);
-          setSurveyStatus(data.surveyDone);
         })
         .catch((err) => {
           console.error(err);
-          setUserTried(true);
-          if (err.response.status === 401) {
+          const { status } = err.response;
+          if (status === 401 || status === 403) {
             Cookies.remove('token');
           }
         })
+        .finally(() => {
+          setUserTried(true);
+        });
     } else {
       setUserTried(true);
     }
   }, []);
 
-
-  if (userTried) {
-    return (
-      <CoreLayout>
-        { user && user.name && <ReactTypeformEmbed
+  // Typeform Embed
+  const typeformEmbed = () => {
+    if (user && user.name) {
+      return (
+        <ReactTypeformEmbed
           ref={ typeform }
           url={ `https://vinlock1.typeform.com/to/${GATSBY_TYPEFORM_SURVEY_ID}?name=${ encodeURIComponent(user.name) }&id=${encodeURIComponent(user.facebookId)}` }
           hideFooter={ true }
           hideHeader={ true }
           popup={ true }
-        /> }
-        <SEO title="Home" />
-        <Text>
-          { user && user.name && (
-            <Row className="row">
-              <div className="col-10">
-                <h2>
-                  Hello, { user.name }!
-                </h2>
-              </div>
-              <div className="col-2">
-                <a
-                  className="btn btn-link"
-                  href={`${ process.env.GATSBY_API_ENDPOINT }/rest/auth/logout?redirect=${encodeURIComponent(window.location.href)}`}
+        />
+      );
+    }
+    return null;
+  };
+
+  const openTypeForm = () => typeform.current.typeform.open();
+
+  if (userTried) {
+    if (user) {
+      let activeStep = 0;
+
+      if (user.surveyDone) {
+        activeStep = 1;
+      }
+
+      if (user.purchased) {
+        activeStep = 2;
+      }
+
+      const stats = () => {
+        if (user.purchasedTickets > 50) {
+          return (
+            <Typography>
+              <b>{user.totalEntries || 0}</b> Alumni RSVP'd&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<b>{user.purchasedTickets || 0}</b> Tickets Purchased
+            </Typography>
+          );
+        } else {
+          return (
+            <Typography>
+              <b>{user.totalEntries || 0}</b> Alumni RSVP'd
+            </Typography>
+          );
+        }
+      };
+
+      return (
+        <CoreLayout>
+          { typeformEmbed() }
+          <SEO title="Home"/>
+          <Container maxWidth="md">
+            <Grid container spacing={3}>
+              <Grid item xs={12} className="center">
+                <Button
+                  onClick={() => {
+                    const apiEndpoint = process.env.GATSBY_API_ENDPOINT;
+                    const redirect = encodeURIComponent(window.location.href);
+                    window.location = `${apiEndpoint}/rest/auth/logout?redirect=${redirect}`
+                  }}
+                  color="secondary"
                 >
                   Logout
-                </a>
-              </div>
-            </Row>
-          )}
-          <p>
-            Welcome to the home page for the Class of 2009 10 Year High School Reunion.
-          </p>
-          <p>
-            Complete all of the following below!
-          </p>
-          {!user && (
-            <>
-              <p>
+                </Button>
+              </Grid>
+              <Grid item xs={12} className="text-center">
+                <Typography variant="h5">Hello, {user.name}!</Typography>
+              </Grid>
+            </Grid>
+            <div className="text-center">
+              {stats()}
+            </div>
+            <Stepper
+              activeStep={ activeStep }
+              openTypeForm={ openTypeForm }
+            />
+          </Container>
+        </CoreLayout>
+      );
+    } else {
+      return (
+        <CoreLayout>
+          <SEO title="Home" />
+          <Container maxWidth="md">
+            <StyledPaper className="text-center">
+              <Typography style={{margin:rem('20px')}}>
                 You must login with Facebook before continuing!
-              </p>
-              <small>If you do not have a facebook account, email us at <a href="mailto:contact@classof09.org">contact@classof09.org</a> with your full name.</small>
-            </>
-          )}
-          <br />
-          <br />
-          <h3 className="text-right">{(user && `${user.totalEntries || 0} alumni attendance confirmed.`)}</h3>
-        </Text>
-        <Step
-          stepNumber={ 1 }
-          title="Reunion Survey"
-          actionText={ () => (
-            <button
-              className="btn btn-dark"
-              onClick={ () => typeform.current.typeform.open() }
-              disabled={!user || surveyComplete}
-            >
-              Click to Take the Survey!
-            </button>
-          )}
-          disabled={!user || (user && user.surveyDone)}
-          disabledOverlay={() => {
-            const disabledOverlay = (
-              <a href={ `${ process.env.GATSBY_API_ENDPOINT }/rest/auth/oauth/facebook` } className="btn btn-primary">
-                <i className="fab fa-facebook-square"/> Login via Facebook
-              </a>
-            );
-
-            if (user && (surveyComplete || (user && user.surveyDone))) {
-              return (
-                <>
-                  <div>
-                    <div>You have completed the survey!</div>
-                    <SmallText>Once we finish collecting all of the data, we will begin ticket sales.</SmallText>
-                  </div>
-                </>
-              );
-            }
-
-            return disabledOverlay;
-          }}
-          description="Take the survey so we can collect data to make the best reunion possible!"
-        />
-        <Container className="row">
-          <h2>Purchase Tickets</h2>
-        </Container>
-      </CoreLayout>
-    );
-  } else {
-    return null;
+              </Typography>
+              <Button
+                onClick={() => {
+                  const apiEndpoint = process.env.GATSBY_API_ENDPOINT;
+                  window.location = `${apiEndpoint}/rest/auth/oauth/facebook`;
+                }}
+                style={{
+                  backgroundColor: '#3B5998',
+                  color: '#FFF',
+                }}
+              >
+                <i className="fab fa-facebook-square"/>&nbsp;&nbsp;Login via Facebook
+              </Button>
+              <Typography style={{margin:rem('20px')}}>
+                <small>If you do not have a facebook account, email us at <a href="mailto:contact@classof09.org">contact@classof09.org</a> with your full name.</small>
+              </Typography>
+            </StyledPaper>
+          </Container>
+        </CoreLayout>
+      );
+    }
   }
+  return null;
 };
 
-export default IndexPage
+export default IndexPage;

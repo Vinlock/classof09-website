@@ -117,11 +117,15 @@ export default function ReunionStepper(props) {
       ),
     },
     {
-      title: 'Reunion Checklist',
-    },
-    {
       title: 'Done!',
-    }
+      content: (
+        <div className="text-center">
+          <StyledTypography variant="h4">
+            You have already purchased your ticket!<br />See you there!
+          </StyledTypography>
+        </div>
+      ),
+    },
   ];
 
   return (
