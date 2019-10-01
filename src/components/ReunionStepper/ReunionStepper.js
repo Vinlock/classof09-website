@@ -13,6 +13,7 @@ import clsx from 'clsx';
 import styled from 'styled-components';
 import { rem } from 'polished';
 import TicketFlow2 from '../TicketPurchaseFlow/TicketFlow2';
+import Rules from '../Rules';
 
 const StyledTypography = styled(Typography)`
   margin-left: ${rem('20px')} !important;
@@ -113,7 +114,10 @@ export default function ReunionStepper(props) {
     {
       title: 'Purchase Tickets',
       content: (
-        <TicketFlow2 flowStep={activeStep} />
+        <>
+          <TicketFlow2 flowStep={activeStep} />
+          <Rules />
+        </>
       ),
     },
     {
@@ -123,6 +127,8 @@ export default function ReunionStepper(props) {
           <StyledTypography variant="h4">
             You have already purchased your ticket!<br />See you there!
           </StyledTypography>
+          <div className="text-center">
+          </div>
         </div>
       ),
     },
