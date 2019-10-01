@@ -44,10 +44,10 @@ class TicketFlow2 extends React.Component {
       modal: true,
       promoCode: code,
       modalTriggerElementId: 'eventbrite-trigger',
-      onOrderComplete: () => this.onOrderComplete,
+      onOrderComplete: () => this.onOrderComplete(),
     });
     return new Promise(resolve =>
-      setTimeout(() => resolve(true), 300));
+      setTimeout(() => resolve(true), 1000));
   };
 
   _setLoading = (state) => {
@@ -65,6 +65,9 @@ class TicketFlow2 extends React.Component {
         </Title>
         <Title>
           Click below to purchase your 10 Year High School Reunion Tickets!
+        </Title>
+        <Title>
+          Please be sure to put your first and last name as it appears in the yearbook!
         </Title>
         <LoadingButton
           loading={loading}
