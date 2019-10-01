@@ -127,8 +127,7 @@ export default function ReunionStepper(props) {
           <StyledTypography variant="h4">
             You have already purchased your ticket!<br />See you there!
           </StyledTypography>
-          <div className="text-center">
-          </div>
+          <Rules />
         </div>
       ),
     },
