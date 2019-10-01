@@ -16,8 +16,21 @@ class TicketFlow2 extends React.Component {
       loading: false,
       code: null,
       cart: {},
+      disabled: true,
     };
     this.trigger = React.createRef();
+  }
+
+  componentDidMount() {
+    getAccessCode()
+      .then((code) => {
+        return this.runWidget(code);
+      })
+      .then(() => {
+        this.setState({
+          disabled: false,
+        });
+      });
   }
 
   onOrderComplete = () => {
@@ -42,7 +55,7 @@ class TicketFlow2 extends React.Component {
   };
 
   purchase = () => {
-    const { loading } = this.state;
+    const { loading, disabled } = this.state;
     const { _setLoading } = this;
 
     return (
@@ -56,17 +69,9 @@ class TicketFlow2 extends React.Component {
         <LoadingButton
           loading={loading}
           variant="contained"
-          disabled={loading}
+          disabled={loading || disabled}
           action={() => {
-            _setLoading(true);
-            getAccessCode()
-              .then((code) => {
-                return this.runWidget(code);
-              })
-              .then(() => {
-                this.trigger.current.click();
-                _setLoading(false);
-              });
+            this.trigger.current.click();
           }}
         >
           <ConfirmationNumberIcon />&nbsp;&nbsp;Purchase Tickets
