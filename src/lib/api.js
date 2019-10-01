@@ -16,12 +16,7 @@ export const getUser = async () => {
   return user.data;
 };
 
-export const getAccessCodeUrl = async (ticketType) => {
-  const response = await api().get(`/rest/eventbrite/purchase/${ticketType}`);
-  return response.data.url;
-};
-
-export const getAccessCode = async (ticketType) => {
-  const response = await api().get(`/rest/eventbrite/purchase/${ticketType}`);
+export const getAccessCode = async () => {
+  const response = await api().get(`/rest/eventbrite/purchase`);
   return response.data.code;
 };
