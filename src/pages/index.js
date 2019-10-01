@@ -74,7 +74,7 @@ const IndexPage = () => {
       let activeStep = 0;
 
       if (user.surveyDone) {
-        activeStep = 2;
+        activeStep = 1;
       }
 
       if (user.purchased) {
