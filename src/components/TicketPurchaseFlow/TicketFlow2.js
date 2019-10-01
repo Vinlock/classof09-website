@@ -25,17 +25,16 @@ class TicketFlow2 extends React.Component {
   };
 
   runWidget = (code) => {
-    this.setState({ code }, () => {
-      window.EBWidgets.createWidget({
-        widgetType: "checkout",
-        eventId: process.env.GATSBY_EVENTBRITE_EVENT_ID,
-        modal: true,
-        promoCode: code,
-        modalTriggerElementId: 'eventbrite-trigger-' + code,
-        onOrderComplete: () => this.onOrderComplete,
-      });
+    window.EBWidgets.createWidget({
+      widgetType: "checkout",
+      eventId: process.env.GATSBY_EVENTBRITE_EVENT_ID,
+      modal: true,
+      promoCode: code,
+      modalTriggerElementId: 'eventbrite-trigger',
+      onOrderComplete: () => this.onOrderComplete,
     });
-    return new Promise(resolve => setTimeout(resolve, 300));
+    return new Promise(resolve =>
+      setTimeout(() => resolve(true), 300));
   };
 
   _setLoading = (state) => {
@@ -62,11 +61,11 @@ class TicketFlow2 extends React.Component {
             _setLoading(true);
             getAccessCode()
               .then((code) => {
-                this.runWidget(code)
-                  .then(() => {
-                    this.trigger.current.click();
-                    _setLoading(false);
-                  });
+                return this.runWidget(code);
+              })
+              .then(() => {
+                this.trigger.current.click();
+                _setLoading(false);
               });
           }}
         >
@@ -77,8 +76,7 @@ class TicketFlow2 extends React.Component {
   };
 
   render() {
-    const { code } = this.state;
-    const buttonId = 'eventbrite-trigger-' + code;
+    const buttonId = 'eventbrite-trigger';
     return (
       <div className="text-center">
         {this.purchase()}
