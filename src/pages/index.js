@@ -31,15 +31,11 @@ const IndexPage = () => {
     if (userIsLoggedIn()) {
       getUser()
         .then((data) => {
-          console.log('user.data', data);
           setUser(data);
         })
         .catch((err) => {
           console.error(err);
-          const { status } = err.response;
-          if (status === 401 || status === 403) {
-            Cookies.remove('token');
-          }
+          Cookies.remove('token');
         })
         .finally(() => {
           setUserTried(true);
