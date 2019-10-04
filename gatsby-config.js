@@ -100,5 +100,11 @@ module.exports = {
       },
     },
     `gatsby-transformer-remark`,
+    {
+      resolve: `gatsby-plugin-favicon`,
+      options: {
+        logo: "./src/images/ecr_logo.png",
+      },
+    }
   ],
 };
