@@ -12,6 +12,7 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import bugsnagClient from '../lib/bugsnag';
 
 const { GATSBY_TYPEFORM_SURVEY_ID } = process.env;
 
@@ -31,10 +32,12 @@ const IndexPage = () => {
     if (userIsLoggedIn()) {
       getUser()
         .then((data) => {
+          bugsnagClient.user = data;
           setUser(data);
         })
         .catch((err) => {
           console.error(err);
+          bugsnagClient.notify(err);
           Cookies.remove('token');
         })
         .finally(() => {
@@ -66,13 +69,16 @@ const IndexPage = () => {
   if (userTried) {
     if (user) {
       let activeStep = 0;
+      bugsnagClient.metaData.step = 0;
 
       if (user.surveyDone) {
         activeStep = 1;
+        bugsnagClient.metaData.step = 1;
       }
 
       if (user.purchased) {
         activeStep = 2;
+        bugsnagClient.metaData.step = 2;
       }
 
       const stats = () => {
