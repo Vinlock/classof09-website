@@ -5,8 +5,9 @@ require('dotenv').config({
 module.exports = {
   siteMetadata: {
     title: `Class of '09 10 Year High School Reunion`,
-    description: '',
+    description: 'El Camino Real High School Class of 2009 10 Year High School Reunion.',
     siteUrl: process.env.APP_URL,
+    image: 'images/erc-banner.png',
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

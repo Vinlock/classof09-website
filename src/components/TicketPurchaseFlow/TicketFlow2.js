@@ -2,8 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { rem } from 'polished';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
 import { getAccessCode, purchase } from '../../lib/api';
 import LoadingButton from '../LoadingButton/LoadingButton';
@@ -56,7 +54,7 @@ class TicketFlow2 extends React.Component {
             });
           });
       },
-      onWidgetModalClose: () => location.reload(),
+      onWidgetModalClose: () => window.location.reload(),
     });
     console.log('widget created');
     return new Promise(resolve => {
@@ -65,13 +63,8 @@ class TicketFlow2 extends React.Component {
     });
   };
 
-  _setLoading = (state) => {
-    this.setState({ loading: state });
-  };
-
   purchase = () => {
     const { loading, disabled } = this.state;
-    const { _setLoading } = this;
 
     return (
       <div>

@@ -86,7 +86,7 @@ function QontoStepIcon(props) {
 }
 
 export default function ReunionStepper(props) {
-  const [activeStep, setActiveStep] = React.useState(props.activeStep);
+  const [activeStep] = React.useState(props.activeStep);
 
   const steps = [
     {

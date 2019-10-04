@@ -15,8 +15,6 @@ import Button from '@material-ui/core/Button';
 
 const { GATSBY_TYPEFORM_SURVEY_ID } = process.env;
 
-const queryParamExists = (param) => window.location.search.includes(`${param}=`);
-
 const userIsLoggedIn = () => Boolean(Cookies.get('token'));
 
 const StyledPaper = styled(Paper)`

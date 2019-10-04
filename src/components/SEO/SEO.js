@@ -16,10 +16,10 @@ function SEO({ description, lang, meta, title }) {
         ecr_logo: file(relativePath: { eq: "ecr_logo.png" }) {
           childImageSharp {
             icon: fluid(maxWidth: 200) {
-              ...GatsbyImageSharpFluid
+              src
             }
             image: fluid(maxWidth: 1024) {
-              ...GatsbyImageSharpFluid
+              src
             }
           }
         }
@@ -47,7 +47,7 @@ function SEO({ description, lang, meta, title }) {
         },
         {
           property: `og:image`,
-          content: ecr_logo.childImageSharp.image
+          content: ecr_logo.childImageSharp.image.src
         },
         {
           property: `og:description`,
