@@ -5481,9 +5481,9 @@ fastparse@^1.1.1:
   resolved "https://registry.yarnpkg.com/fastparse/-/fastparse-1.1.2.tgz#91728c5a5942eced8531283c79441ee4122c35a9"
   integrity sha512-483XLLxTVIwWK3QTrMGRqUfUpoOs/0hbQrl2oz4J0pAcm3A3bu84wxTFqGqkJzewCLdME38xJLJAxBABfQT8sQ==
 
-"favicons-webpack-plugin@git+https://github.com/Creatiwity/favicons-webpack-plugin.git#0872de414061baaad0a2853c77ae75bc38b8bbbf":
+"favicons-webpack-plugin@https://github.com/Creatiwity/favicons-webpack-plugin.git#0872de414061baaad0a2853c77ae75bc38b8bbbf":
   version "0.0.9"
-  resolved "git+https://github.com/Creatiwity/favicons-webpack-plugin.git#0872de414061baaad0a2853c77ae75bc38b8bbbf"
+  resolved "https://github.com/Creatiwity/favicons-webpack-plugin.git#0872de414061baaad0a2853c77ae75bc38b8bbbf"
   dependencies:
     core-js "^2.5.7"
     favicons "^5.1.1"
@@ -6039,6 +6039,13 @@ gatsby-plugin-favicon@^3.1.6:
     favicons-webpack-plugin "https://github.com/Creatiwity/favicons-webpack-plugin.git#0872de414061baaad0a2853c77ae75bc38b8bbbf"
     html-react-parser "^0.6.4"
     lodash "^4.17.11"
+
+gatsby-plugin-google-analytics@^2.1.20:
+  version "2.1.20"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-google-analytics/-/gatsby-plugin-google-analytics-2.1.20.tgz#2718353b42de2bf4486af7a85fb1773ed6833aee"
+  integrity sha512-zbgnhYmu1CcenY4j3rZV3aIZlB1XERp7WCfC2OiV4x36Sm2xF1CZCfFJ6XvVcX7e+/7KcJexIq5FBTE8J6RH3A==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
 
 gatsby-plugin-manifest@^2.2.4:
   version "2.2.4"
