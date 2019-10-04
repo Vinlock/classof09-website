@@ -50,6 +50,14 @@ function SEO({ description, lang, meta, title }) {
           content: ecr_logo.childImageSharp.image.src
         },
         {
+          property: 'og:image:url',
+          content: ecr_logo.childImageSharp.image.src,
+        },
+        {
+          property: 'og:image:type',
+          content: 'image/png',
+        },
+        {
           property: `og:description`,
           content: metaDescription,
         },
