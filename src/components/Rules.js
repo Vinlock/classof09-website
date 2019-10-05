@@ -60,9 +60,9 @@ const Rules = () => {
         </Typography>
         <Typography component="p">
           <ul>
-            <li>All parties must be accompanied with a Class of 2009 graduate.</li>
-            <li>Bag Check</li>
-            <li>ID is required</li>
+            <li>All parties must be accompanied with at least one attendee of El Camino Real High School for one or more of the years inclusive of the Class of 2009.</li>
+            <li>Bag Check required.</li>
+            <li>Photo ID is required.</li>
           </ul>
         </Typography>
       </StyledPaper>

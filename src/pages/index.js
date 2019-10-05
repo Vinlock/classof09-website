@@ -1,3 +1,4 @@
+import { Typography } from '@material-ui/core';
 import React from 'react';
 import { ReactTypeformEmbed } from 'react-typeform-embed';
 import Stepper from '../components/ReunionStepper';
@@ -5,7 +6,6 @@ import CoreLayout from '../layouts/CoreLayout';
 import Cookies from 'js-cookie';
 import styled from 'styled-components';
 import { rem } from 'polished';
-import * as queryString from 'query-string';
 import { getUser } from '../lib/api';
 import SEO from '../components/SEO';
 import Container from '@material-ui/core/Container';
@@ -14,6 +14,7 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import ErrorModal from '../components/ErrorModal';
+// import bugsnagClient from '../lib/bugsnag';
 
 const { GATSBY_TYPEFORM_SURVEY_ID } = process.env;
 
@@ -32,7 +33,6 @@ const IndexPage = () => {
   const [error, setError] = React.useState({});
 
   React.useEffect(() => {
-    console.log(getQueryError());
     if (getQueryError() === 'EMAIL_NOT_VERIFIED') {
       setError({
         title: 'Unverified E-Mail Address',
@@ -49,15 +49,13 @@ const IndexPage = () => {
     if (userIsLoggedIn()) {
       getUser()
         .then((data) => {
-          console.log('user.data', data);
+          // bugsnagClient.user = data;
           setUser(data);
         })
         .catch((err) => {
           console.error(err);
-          const { status } = err.response;
-          if (status === 401 || status === 403) {
-            Cookies.remove('token');
-          }
+          // bugsnagClient.notify(err);
+          Cookies.remove('token');
         })
         .finally(() => {
           setUserTried(true);
@@ -89,12 +87,10 @@ const IndexPage = () => {
     if (user) {
       let activeStep = 0;
 
-      if (user.surveyDone) {
-        activeStep = 1;
-      }
-
       if (user.purchased) {
         activeStep = 2;
+      } else if (user.surveyDone) {
+        activeStep = 1;
       }
 
       const stats = () => {
