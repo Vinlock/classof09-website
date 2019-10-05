@@ -37,6 +37,7 @@
     "polished": "^3.4.1",
     "prettier": "^1.18.2",
     "prop-types": "^15.7.2",
+    "query-string": "^6.8.3",
     "react": "^16.8.6",
     "react-cookie": "^4.0.1",
     "react-dom": "^16.8.6",

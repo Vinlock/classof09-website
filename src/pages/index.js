@@ -1,4 +1,3 @@
-import { Typography } from '@material-ui/core';
 import React from 'react';
 import { ReactTypeformEmbed } from 'react-typeform-embed';
 import Stepper from '../components/ReunionStepper';
@@ -6,16 +5,21 @@ import CoreLayout from '../layouts/CoreLayout';
 import Cookies from 'js-cookie';
 import styled from 'styled-components';
 import { rem } from 'polished';
+import * as queryString from 'query-string';
 import { getUser } from '../lib/api';
 import SEO from '../components/SEO';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import ErrorModal from '../components/ErrorModal';
 
 const { GATSBY_TYPEFORM_SURVEY_ID } = process.env;
 
 const userIsLoggedIn = () => Boolean(Cookies.get('token'));
+
+const getQueryError = () => queryString.parse(window.location.search).error;
 
 const StyledPaper = styled(Paper)`
   padding: ${rem('20px')};
@@ -25,8 +29,22 @@ const IndexPage = () => {
   const typeform = React.useRef(null);
   const [user, setUser] = React.useState(null);
   const [userTried, setUserTried] = React.useState(false);
+  const [error, setError] = React.useState({});
 
   React.useEffect(() => {
+    console.log(getQueryError());
+    if (getQueryError() === 'EMAIL_NOT_VERIFIED') {
+      setError({
+        title: 'Unverified E-Mail Address',
+        desc: (
+          <>
+            <p>Your Facebook e-mail address is not verified.</p>
+            <p>Please verify your Facebook e-mail address and try again!</p>
+            <p>Thanks!</p>
+          </>
+        ),
+      });
+    }
     // Get User Info
     if (userIsLoggedIn()) {
       getUser()
@@ -130,6 +148,14 @@ const IndexPage = () => {
     } else {
       return (
         <CoreLayout>
+          <ErrorModal
+            open={Object.keys(error).length > 0}
+            title={error.title}
+            desc={error.desc}
+            onClose={() => {
+              window.location = window.location.protocol + '//' + window.location.host;
+            }}
+          />
           <SEO title="Home" />
           <Container maxWidth="md">
             <StyledPaper className="text-center">
