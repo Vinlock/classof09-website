@@ -14,6 +14,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import ErrorModal from '../components/ErrorModal';
 // import bugsnagClient from '../lib/bugsnag';
+import * as queryString from 'query-string';
 
 const { GATSBY_TYPEFORM_SURVEY_ID } = process.env;
 
