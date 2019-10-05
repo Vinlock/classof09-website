@@ -1,4 +1,3 @@
-import { Typography } from '@material-ui/core';
 import React from 'react';
 import { ReactTypeformEmbed } from 'react-typeform-embed';
 import Stepper from '../components/ReunionStepper';
