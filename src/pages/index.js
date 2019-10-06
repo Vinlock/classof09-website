@@ -1,20 +1,20 @@
 import React from 'react';
 import { ReactTypeformEmbed } from 'react-typeform-embed';
-import Stepper from '../components/ReunionStepper';
-import CoreLayout from '../layouts/CoreLayout';
+import * as queryString from 'query-string';
 import Cookies from 'js-cookie';
 import styled from 'styled-components';
 import { rem } from 'polished';
-import { getUser } from '../lib/api';
-import SEO from '../components/SEO';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Stepper from '../components/ReunionStepper';
+import { getUser } from '../lib/api';
+import CoreLayout from '../layouts/CoreLayout';
+import SEO from '../components/SEO';
 import ErrorModal from '../components/ErrorModal';
 // import bugsnagClient from '../lib/bugsnag';
-import * as queryString from 'query-string';
 
 const { GATSBY_TYPEFORM_SURVEY_ID } = process.env;
 
